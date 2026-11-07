@@ -1,0 +1,1269 @@
+<!doctype html>
+<html lang="de" data-pwa="true">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173e32">
+  <meta name="color-scheme" content="light">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <meta name="description" content="Energiebrücken verbindet Menschen aus Energieberatung, Handwerk, Industrie, Kommunen, Softwareentwicklung und Gründung.">
+  <title>Energiebrücken — Netzwerk für Energieeffizienz & Energiewende · V1</title>
+  <style>
+    :root {
+      --forest: #173e32;
+      --forest-2: #245443;
+      --mint: #dbe9d5;
+      --lime: #d7ef75;
+      --cream: #f6f5ee;
+      --paper: #fffefa;
+      --ink: #172c25;
+      --muted: #5d6b63;
+      --line: #dce2d9;
+      --orange: #df7952;
+      --blue: #6f9fb1;
+      --shadow: 0 18px 55px rgba(23, 62, 50, .10);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    button, input, select, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid #84a922; outline-offset: 3px; }
+    .wrap { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(246, 245, 238, .94);
+      border-bottom: 1px solid rgba(23, 62, 50, .10);
+      backdrop-filter: blur(14px);
+    }
+    .nav {
+      min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; font-weight: 850; letter-spacing: -.04em; }
+    .brand-mark { width: 37px; height: 37px; border-radius: 12px; display: grid; place-items: center; background: var(--forest); }
+    .brand-mark svg { width: 25px; height: 25px; }
+    .brand-name { font-size: 1.04rem; }
+    .brand-name span { color: #779329; }
+    .navlinks { display: flex; align-items: center; gap: 28px; font-size: .9rem; font-weight: 650; color: var(--muted); }
+    .navlinks a { text-decoration: none; }
+    .navlinks a:hover { color: var(--forest); }
+    .nav-cta { border-radius: 999px; padding: 11px 17px; background: var(--forest); color: #fff; text-decoration: none; font-size: .9rem; font-weight: 750; }
+    .nav-cta:hover, .button-primary:hover { background: var(--forest-2); transform: translateY(-1px); }
+    .version-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 0; color:#52645a; font-size:.75rem; }
+    .version-pill { display:inline-flex; align-items:center; gap:7px; font-weight:750; }
+    .version-pill i { width:8px; height:8px; border-radius:50%; display:inline-block; background:#91a83d; }
+    .version-meta { color:#6b776e; }
+    .install-button { border:1px solid #b8c6b9; border-radius:99px; background:#fffefa; color:var(--forest); padding:6px 12px; cursor:pointer; font-weight:750; font-size:.75rem; }
+    .install-button[hidden] { display:none; }
+    .profile-actions { margin-top:12px; padding-top:9px; border-top:1px solid var(--line); }
+    .profile-actions .plain-button { color:#8a503e; font-size:.75rem; }
+
+    .hero { padding: 74px 0 54px; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.03fr .97fr; align-items: center; gap: 46px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: #647e24; text-transform: uppercase; letter-spacing: .13em; font-size: .72rem; font-weight: 850; }
+    .eyebrow:before { content: ""; width: 22px; height: 2px; background: #94ad39; }
+    h1 { margin: 17px 0 18px; max-width: 720px; font-size: clamp(2.65rem, 5vw, 4.8rem); line-height: .99; letter-spacing: -.065em; font-weight: 790; }
+    h1 em { font-style: normal; color: #648127; }
+    .hero-copy { max-width: 550px; font-size: 1.1rem; color: #52645a; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .button { border: 0; cursor: pointer; border-radius: 999px; padding: 14px 20px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; text-decoration: none; font-weight: 760; transition: .18s ease; }
+    .button-primary { color: white; background: var(--forest); }
+    .button-secondary { color: var(--forest); background: transparent; border: 1px solid #b8c6b9; }
+    .button-secondary:hover { border-color: var(--forest); background: rgba(255,255,255,.5); }
+    .hero-note { margin-top: 22px; color: #6b776e; font-size: .82rem; }
+
+    .network-art {
+      min-height: 390px; position: relative; overflow: hidden; border-radius: 34px;
+      background: var(--forest); box-shadow: var(--shadow); isolation: isolate;
+    }
+    .network-art:before, .network-art:after {
+      content: ""; position: absolute; border: 1px solid rgba(219, 233, 213, .2); border-radius: 50%; z-index: -1;
+    }
+    .network-art:before { width: 390px; height: 390px; left: 50%; top: 50%; transform: translate(-50%,-50%); }
+    .network-art:after { width: 270px; height: 270px; left: 50%; top: 50%; transform: translate(-50%,-50%); }
+    .art-glow { position: absolute; width: 250px; height: 250px; border-radius: 50%; background: rgba(215,239,117,.10); filter: blur(2px); left: 30%; top: 18%; }
+    .core {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+      width: 132px; height: 132px; border-radius: 50%; display: grid; place-items: center; text-align: center;
+      background: var(--lime); color: var(--forest); font-weight: 850; line-height: 1.12; font-size: 1.04rem;
+      box-shadow: 0 0 0 13px rgba(215,239,117,.11), 0 0 0 28px rgba(215,239,117,.05);
+    }
+    .node {
+      position: absolute; width: 112px; height: 112px; border-radius: 50%; display: grid; place-items: center; text-align: center;
+      border: 1px solid rgba(255,255,255,.35); color: white; background: rgba(255,255,255,.09);
+      backdrop-filter: blur(4px); font-size: .83rem; font-weight: 700; line-height: 1.22;
+    }
+    .node b { display: block; font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: var(--lime); margin-bottom: 5px; }
+    .node-1 { left: 11%; top: 12%; }
+    .node-2 { right: 12%; top: 10%; }
+    .node-3 { left: 9%; bottom: 11%; }
+    .node-4 { right: 10%; bottom: 10%; }
+    .art-caption { position: absolute; left: 25px; bottom: 21px; color: rgba(255,255,255,.72); font-size: .76rem; letter-spacing: .02em; }
+
+    .map-section { background: #edf1e8; }
+    .map-layout { display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; align-items: stretch; margin-top: 26px; }
+    .map-card { background: var(--forest); border-radius: 24px; padding: 18px; min-height: 500px; display: grid; place-items: center; overflow: hidden; }
+    .germany-map { width: min(100%, 480px); height: auto; overflow: visible; }
+    .germany-outline { fill: #dbe9d5; stroke: #f6f5ee; stroke-width: 3; stroke-linejoin: round; }
+    .map-marker { cursor: pointer; outline: none; }
+    .map-marker .marker-halo { fill: rgba(215,239,117,.22); stroke: rgba(215,239,117,.5); stroke-width: 1; }
+    .map-marker .marker-dot { fill: var(--orange); stroke: #fffefa; stroke-width: 3; transition: r .15s ease, fill .15s ease; }
+    .map-marker:hover .marker-dot, .map-marker:focus .marker-dot, .map-marker.selected .marker-dot { fill: #d7ef75; r: 10px; }
+    .map-marker .city-label { fill: #fffefa; font-size: 12px; font-weight: 750; paint-order: stroke; stroke: #173e32; stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+    .map-legend { color: rgba(255,255,255,.73); font-size: .73rem; text-align: center; margin: 0; }
+    .map-details { background: var(--paper); border: 1px solid #dce5d7; border-radius: 24px; padding: 27px; display: flex; flex-direction: column; }
+    .map-details .section-kicker { margin-bottom: 8px; }
+    .map-details h3 { margin: 0 0 10px; font-size: 1.65rem; line-height: 1.08; letter-spacing: -.045em; }
+    .map-details p { color: var(--muted); font-size: .92rem; }
+    .map-tags { display: flex; flex-wrap: wrap; gap: 7px; margin: 8px 0 19px; }
+    .map-tags span { background: #eef3e8; color: #536b38; border-radius: 99px; padding: 6px 10px; font-size: .73rem; font-weight: 750; }
+    .map-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: auto; }
+    .map-disclaimer { color: #66746a; font-size: .76rem; margin: 13px 0 0; }
+
+    .creative-lab-section { background: #f3f2e8; }
+    .lab-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 18px; margin-top: 28px; align-items: start; }
+    .lab-panel { background: var(--paper); border: 1px solid #e0e5d9; border-radius: 20px; padding: 22px; }
+    .lab-panel h3 { margin: 0 0 6px; font-size: 1.18rem; letter-spacing: -.025em; }
+    .lab-panel > p { margin: 0 0 17px; color: var(--muted); font-size: .85rem; }
+    .lab-controls { display: grid; gap: 12px; }
+    .lab-question-list { display: grid; gap: 8px; margin-top: 14px; }
+    .lab-question { border-left: 3px solid #91a83d; background: #f1f4e9; border-radius: 0 10px 10px 0; padding: 10px 12px; color: #455747; font-size: .82rem; }
+    .idea-wall { display: grid; gap: 10px; margin-top: 15px; }
+    .idea-card { border: 1px solid #e0e6dc; border-radius: 13px; padding: 14px; background: #fff; }
+    .idea-card h4 { margin: 0 0 5px; font-size: .96rem; }
+    .idea-card p { margin: 0; color: var(--muted); font-size: .82rem; white-space: pre-wrap; }
+    .idea-meta { margin-top: 9px; color: #718078; font-size: .68rem; }
+    .idea-empty { text-align: center; padding: 22px 10px; color: var(--muted); background: #f5f6f1; border-radius: 12px; font-size: .83rem; }
+    .lab-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 13px; color: #718078; font-size: .73rem; }
+
+    .ribbon { border-block: 1px solid var(--line); background: rgba(255,255,255,.42); }
+    .ribbon-inner { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; padding: 18px 0; color: #52645a; font-size: .87rem; font-weight: 650; }
+    .ribbon span { display: inline-flex; gap: 9px; align-items: center; }
+    .ribbon i { width: 7px; height: 7px; border-radius: 50%; background: #8ea735; display: inline-block; }
+
+    section { padding: 84px 0; scroll-margin-top: 105px; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 28px; margin-bottom: 30px; }
+    .section-kicker { color: #71892a; text-transform: uppercase; letter-spacing: .14em; font-weight: 850; font-size: .72rem; }
+    h2 { margin: 8px 0 0; font-size: clamp(2rem, 3.8vw, 3.2rem); line-height: 1.04; letter-spacing: -.055em; }
+    .section-intro { max-width: 490px; color: var(--muted); margin: 0; }
+    .directory-panel { background: var(--paper); border: 1px solid #e5e9e0; border-radius: var(--radius); padding: 21px; box-shadow: 0 8px 30px rgba(23,62,50,.04); }
+    .filters { display: grid; grid-template-columns: 1fr 220px; gap: 12px; }
+    .field-control { width: 100%; min-height: 48px; padding: 12px 15px; border-radius: 13px; border: 1px solid #d7dfd5; background: #fff; color: var(--ink); }
+    .field-control::placeholder { color: #7e8980; }
+    .filter-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin: 18px 1px 20px; }
+    .filter-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { border: 1px solid #d6ded5; border-radius: 99px; background: transparent; color: #4f6156; padding: 7px 12px; cursor: pointer; font-size: .82rem; font-weight: 700; }
+    .chip:hover, .chip.active { color: white; background: var(--forest); border-color: var(--forest); }
+    .profile-count { color: #718078; font-size: .82rem; white-space: nowrap; }
+    .profile-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .profile-card {
+      min-height: 294px; background: #fff; border: 1px solid #e5e9e0; border-radius: 19px; padding: 19px;
+      display: flex; flex-direction: column; transition: .18s ease;
+    }
+    .profile-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(23,62,50,.08); border-color: #c9d5c6; }
+    .card-top { display: flex; align-items: center; gap: 11px; margin-bottom: 13px; }
+    .avatar { width: 44px; height: 44px; flex: 0 0 44px; border-radius: 15px; display: grid; place-items: center; background: var(--mint); color: var(--forest); font-weight: 850; }
+    .role-tag { font-size: .67rem; color: #69812a; letter-spacing: .08em; text-transform: uppercase; font-weight: 850; }
+    .profile-card h3 { font-size: 1.06rem; margin: 0; letter-spacing: -.025em; }
+    .profile-card p { margin: 0; color: var(--muted); font-size: .84rem; }
+    .profile-location { margin: -3px 0 13px !important; font-size: .78rem !important; }
+    .card-label { color: #78857c; font-size: .67rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 800; margin: 11px 0 3px; }
+    .profile-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+    .tiny-tag { background: #f0f4eb; color: #4e6541; border-radius: 7px; padding: 4px 7px; font-size: .69rem; font-weight: 700; }
+    .profile-origin { margin-top: auto; padding-top: 12px; font-size: .68rem; color: #87928a; }
+    .empty-state { grid-column: 1 / -1; padding: 32px; text-align: center; color: var(--muted); }
+    .stakeholder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; margin-top: 30px; }
+    .stakeholder-card { background: var(--paper); border: 1px solid #e2e8df; border-radius: 18px; padding: 20px; min-height: 206px; }
+    .stakeholder-card .role { color: #6d842d; text-transform: uppercase; letter-spacing: .1em; font-size: .67rem; font-weight: 850; }
+    .stakeholder-card h3 { margin: 8px 0; font-size: 1.08rem; line-height: 1.2; letter-spacing: -.025em; }
+    .stakeholder-card p { color: var(--muted); font-size: .84rem; margin: 0; }
+    .stakeholder-card .outcome { margin-top: 12px; padding-top: 11px; border-top: 1px solid var(--line); color: #435b4b; font-size: .78rem; font-weight: 700; }
+
+    .bridge-section { background: var(--forest); color: white; position: relative; overflow: hidden; }
+    .bridge-section:after { content: ""; position: absolute; width: 480px; height: 480px; border-radius: 50%; border: 1px solid rgba(255,255,255,.12); right: -170px; top: -230px; box-shadow: 0 0 0 45px rgba(255,255,255,.035), 0 0 0 100px rgba(255,255,255,.025); }
+    .bridge-section .section-kicker { color: var(--lime); }
+    .bridge-section h2 { max-width: 640px; }
+    .bridge-section .section-intro { color: rgba(255,255,255,.72); }
+    .project-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 32px; }
+    .project-card { padding: 24px; border: 1px solid rgba(255,255,255,.19); border-radius: 20px; background: rgba(255,255,255,.07); }
+    .project-card .project-type { color: var(--lime); font-size: .7rem; letter-spacing: .1em; font-weight: 850; text-transform: uppercase; }
+    .project-card h3 { margin: 12px 0 8px; font-size: 1.22rem; line-height: 1.15; letter-spacing: -.03em; }
+    .project-card p { color: rgba(255,255,255,.72); font-size: .88rem; margin: 0 0 19px; }
+    .text-link { display: inline-flex; gap: 7px; align-items: center; color: var(--lime); text-decoration: none; font-weight: 750; font-size: .86rem; }
+    .text-link:hover { text-decoration: underline; }
+    .bridge-question { position: relative; z-index: 1; margin-top: 19px; color: rgba(255,255,255,.68); font-size: .82rem; }
+    .coding-section { background: #e9efe4; }
+    .venture-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; margin-top: 28px; }
+    .venture-card { background: var(--paper); border: 1px solid #dce5d7; border-radius: 18px; padding: 21px; }
+    .venture-card .mini-kicker { color: #70872d; text-transform: uppercase; letter-spacing: .1em; font-size: .68rem; font-weight: 850; }
+    .venture-card h3 { margin: 9px 0 7px; font-size: 1.12rem; line-height: 1.18; }
+    .venture-card p { color: var(--muted); font-size: .84rem; margin: 0; }
+    .venture-path { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 23px; }
+    .venture-step { padding: 13px; background: rgba(255,255,255,.7); border-radius: 13px; }
+    .venture-step b { display: block; color: #71872d; font-size: .68rem; letter-spacing: .08em; }
+    .venture-step span { display: block; margin-top: 4px; font-size: .8rem; font-weight: 750; }
+    .model-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 11px; margin-top: 16px; }
+    .model-card { background: #fff; border: 1px solid #dce5d7; border-radius: 14px; padding: 15px; }
+    .model-card h4 { margin: 0 0 5px; font-size: .9rem; }
+    .model-card p { margin: 0; color: var(--muted); font-size: .77rem; }
+    .mvp-callout { margin-top: 17px; padding: 17px 19px; border-radius: 15px; background: var(--lime); color: var(--forest); font-size: .88rem; }
+    .mvp-callout strong { font-size: .96rem; }
+    .method-note { margin-top: 24px; border: 1px solid #dce5d7; border-radius: 15px; background: rgba(255,255,255,.62); padding: 15px 17px; }
+    .method-note summary { cursor: pointer; font-weight: 800; color: var(--forest); }
+    .method-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 12px; }
+    .method-columns h4 { margin: 0 0 7px; font-size: .82rem; }
+    .method-columns ol { margin: 0; padding-left: 20px; color: var(--muted); font-size: .78rem; }
+
+    .formats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 30px; }
+    .format-card { background: var(--paper); padding: 24px; border-radius: 19px; border: 1px solid #e2e8df; }
+    .format-icon { width: 42px; height: 42px; display: grid; place-items: center; background: var(--mint); color: var(--forest); border-radius: 14px; font-size: 1.12rem; font-weight: 850; }
+    .format-card h3 { margin: 17px 0 6px; font-size: 1.13rem; letter-spacing: -.03em; }
+    .format-card p { margin: 0; color: var(--muted); font-size: .88rem; }
+    .how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 29px; }
+    .how-step { padding: 19px 21px; background: #edf1e8; border-radius: 16px; }
+    .step-no { color: #768d2d; font-size: .74rem; letter-spacing: .1em; font-weight: 850; }
+    .how-step h3 { margin: 7px 0 4px; font-size: 1rem; }
+    .how-step p { margin: 0; color: var(--muted); font-size: .84rem; }
+
+    .join-section { padding-bottom: 70px; }
+    .join-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 34px; align-items: start; }
+    .join-copy { position: sticky; top: 105px; }
+    .join-copy p { color: var(--muted); }
+    .join-copy .note-box { margin-top: 24px; padding: 17px; border-radius: 15px; background: #e9efe4; color: #4e6155; font-size: .83rem; }
+    .form-card { background: var(--paper); border: 1px solid #e2e8df; border-radius: 24px; padding: 27px; box-shadow: var(--shadow); }
+    .form-card h3 { margin: 0 0 4px; font-size: 1.35rem; letter-spacing: -.03em; }
+    .form-sub { color: var(--muted); margin: 0 0 22px; font-size: .88rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label { font-size: .78rem; font-weight: 800; color: #475a4e; }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%; border: 1px solid #d7dfd5; border-radius: 11px; background: white; padding: 11px 12px; color: var(--ink);
+    }
+    .form-field textarea { min-height: 78px; resize: vertical; }
+    .form-field input::placeholder, .form-field textarea::placeholder { color: #8b968e; }
+    .form-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 17px; }
+    .button-small { padding: 11px 15px; font-size: .86rem; }
+    .button-outline { border: 1px solid #cbd5ca; color: var(--forest); background: transparent; }
+    .button-outline:hover { background: #f2f5ed; }
+    .form-message { min-height: 1.3em; margin: 13px 0 0; color: #567823; font-size: .83rem; }
+    .local-tools { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); color: #718078; font-size: .75rem; }
+    .plain-button { border: 0; background: none; color: #617927; cursor: pointer; font-weight: 750; text-decoration: underline; text-underline-offset: 3px; padding: 4px 0; }
+    .privacy-note { margin: 16px 0 0; padding: 12px 13px; background: #fff5df; border-radius: 11px; color: #735e2e; font-size: .77rem; }
+
+    footer { background: #102e25; color: rgba(255,255,255,.75); padding: 31px 0; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex-wrap: wrap; font-size: .78rem; }
+    .footer-brand { color: #fff; font-weight: 800; letter-spacing: -.03em; }
+    .footer-brand span { color: var(--lime); }
+    .footer-disclaimer { max-width: 610px; text-align: right; }
+
+    @media (max-width: 900px) {
+      .navlinks { gap: 14px; font-size: .8rem; }
+      .brand-name { font-size: .95rem; }
+      .nav-cta { padding: 10px 12px; font-size: .82rem; }
+      .hero-grid { grid-template-columns: 1fr; gap: 34px; }
+      .network-art { min-height: 350px; }
+      .map-layout, .lab-grid { grid-template-columns: 1fr; }
+      .map-card { min-height: 400px; }
+      .profile-grid { grid-template-columns: repeat(2, 1fr); }
+      .stakeholder-grid { grid-template-columns: repeat(2, 1fr); }
+      .venture-path { grid-template-columns: repeat(3, 1fr); }
+      .model-grid { grid-template-columns: repeat(2, 1fr); }
+      .method-columns { grid-template-columns: 1fr; }
+      .join-grid { grid-template-columns: 1fr; }
+      .join-copy { position: static; }
+    }
+    @media (max-width: 650px) {
+      .wrap { width: min(100% - 28px, 1160px); }
+      .nav { min-height: 65px; }
+      .nav { min-height:65px; flex-wrap:wrap; padding:10px 0 7px; row-gap:8px; }
+      .navlinks { display:flex; order:3; width:100%; gap:18px; overflow-x:auto; white-space:nowrap; padding:2px 0 7px; scrollbar-width:thin; }
+      .navlinks a { flex:0 0 auto; }
+      .nav-cta { margin-left:auto; padding:9px 13px; font-size:.82rem; }
+      section { scroll-margin-top:132px; }
+      .version-bar { font-size:.68rem; }
+      .version-meta { max-width:48%; text-align:right; }
+      .hero { padding: 50px 0 34px; }
+      .hero-grid { gap: 26px; }
+      .hero-copy { font-size: 1rem; }
+      .network-art { min-height: 300px; border-radius: 24px; }
+      .map-card { min-height: 350px; padding: 10px; }
+      .map-details { padding: 21px; }
+      .germany-map { width: min(100%, 370px); }
+      .node { width: 88px; height: 88px; font-size: .72rem; }
+      .node b { font-size: .58rem; }
+      .core { width: 108px; height: 108px; font-size: .88rem; }
+      .node-1 { left: 7%; top: 10%; }
+      .node-2 { right: 7%; top: 9%; }
+      .node-3 { left: 6%; bottom: 11%; }
+      .node-4 { right: 6%; bottom: 10%; }
+      .art-caption { left: 16px; bottom: 14px; font-size: .68rem; }
+      .ribbon-inner { padding: 15px 0; gap: 9px 17px; font-size: .78rem; }
+      section { padding: 62px 0; }
+      .section-head { display: block; }
+      .section-intro { margin-top: 13px; }
+      .directory-panel { padding: 13px; }
+      .filters { grid-template-columns: 1fr; }
+      .filter-row { display: block; }
+      .profile-count { display: block; margin-top: 13px; }
+      .profile-grid, .project-grid, .formats-grid, .how-grid, .stakeholder-grid, .venture-grid { grid-template-columns: 1fr; }
+      .venture-path, .model-grid { grid-template-columns: 1fr 1fr; }
+      .profile-card { min-height: 0; }
+      .project-card { padding: 20px; }
+      .form-card { padding: 19px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-field.full { grid-column: auto; }
+      .local-tools { align-items: flex-start; flex-direction: column; }
+      .footer-disclaimer { text-align: left; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#start" aria-label="Energiebrücken Startseite">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M7 21c4.5-10 13.5-10 18 0M7 12c4.5 10 13.5 10 18 0" stroke="#D7EF75" stroke-width="2.4" stroke-linecap="round"/>
+            <circle cx="7" cy="16.5" r="3" fill="#fffefa"/><circle cx="25" cy="16.5" r="3" fill="#fffefa"/><circle cx="16" cy="16.5" r="3" fill="#D7EF75"/>
+          </svg>
+        </span>
+        <span class="brand-name">energie<span>brücken</span></span>
+      </a>
+      <nav class="navlinks" aria-label="Hauptnavigation">
+        <a href="#netzwerk">Netzwerk</a>
+        <a href="#deutschland">Deutschlandkarte</a>
+        <a href="#nutzen">Mehrwert</a>
+        <a href="#projekte">Projektideen</a>
+        <a href="#kreativwerkstatt">Kreativwerkstatt</a>
+        <a href="#code-gruendung">Code & Gründung</a>
+        <a href="#formate">Austausch</a>
+      </nav>
+      <a class="nav-cta" href="#mitmachen">Kurz vorstellen <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="wrap version-bar">
+      <span class="version-pill"><i aria-hidden="true"></i> Erste Kolleg:innen-Version · V1</span>
+      <span class="version-meta" id="appStatus" role="status" aria-live="polite">Offline nutzbar · Daten bleiben auf diesem Gerät</span>
+      <button class="install-button" id="installApp" type="button" hidden>App installieren</button>
+    </div>
+  </header>
+
+  <main id="start">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">Ein Netzwerk für die Energiewende</div>
+          <h1>Gute Energie entsteht durch <em>Verbindungen.</em></h1>
+          <p class="hero-copy">Energieberatung, Handwerk, Industrie, Kommunen, Politik, Softwareentwicklung und Gründung an einen Tisch bringen — damit aus Fachwissen Zusammenarbeit und aus guten Ideen umsetzbare Lösungen werden.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#netzwerk">Menschen entdecken <span aria-hidden="true">↓</span></a>
+            <a class="button button-secondary" href="#mitmachen">Ich stelle mich vor</a>
+          </div>
+          <p class="hero-note">Gedacht als offenes Netzwerk: gestartet aus dem WBS-Umfeld, offen für Menschen aus allen Bereichen der Energiewende.</p>
+        </div>
+        <div class="network-art" aria-label="Illustration: Energie verbindet Beratung, Handwerk, Industrie und Kommunen">
+          <div class="art-glow"></div>
+          <div class="core">Energie<br>gemeinsam<br>weiterdenken</div>
+          <div class="node node-1"><span><b>Planen</b>Beratung</span></div>
+          <div class="node node-2"><span><b>Umsetzen</b>Handwerk</span></div>
+          <div class="node node-3"><span><b>Verändern</b>Industrie</span></div>
+          <div class="node node-4"><span><b>Ermöglichen</b>Kommune</span></div>
+          <div class="art-caption">Viele Perspektiven. Ein gemeinsames Ziel.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ribbon">
+      <div class="wrap ribbon-inner">
+        <span><i></i> Energieeffizienz</span>
+        <span><i></i> Gebäude & Wärme</span>
+        <span><i></i> Industrie & Prozesse</span>
+        <span><i></i> Handwerk & Umsetzung</span>
+        <span><i></i> Kommunen & Politik</span>
+      </div>
+    </div>
+
+    <section class="map-section" id="deutschland">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Regional vernetzt · deutschlandweit offen</div>
+            <h2>Die Energiewende<br>hat viele Orte.</h2>
+          </div>
+          <p class="section-intro">Wähle einen möglichen Netzwerk-Knoten. So wird sichtbar, wo sich Menschen, Themen und Pilotideen verbinden könnten — vom WBS-Startpunkt Rhein-Main bis zu weiteren Regionen.</p>
+        </div>
+        <div class="map-layout">
+          <div class="map-card">
+            <svg class="germany-map" viewBox="0 0 480 560" role="group" aria-labelledby="mapTitle mapDescription">
+              <title id="mapTitle">Schematische Deutschlandkarte mit möglichen Netzwerkregionen</title>
+              <desc id="mapDescription">Sieben auswählbare Beispielregionen: Hamburg, Berlin, Rhein-Ruhr, Rhein-Main, Leipzig-Dresden, Stuttgart und München.</desc>
+              <path class="germany-outline" d="M220 22 L241 31 L258 25 L272 39 L294 32 L308 44 L331 45 L335 58 L359 61 L364 78 L383 82 L380 101 L397 112 L389 130 L405 146 L397 163 L410 184 L398 202 L405 222 L392 242 L397 262 L381 279 L384 300 L368 315 L374 338 L355 350 L362 373 L345 389 L352 409 L335 425 L335 444 L316 453 L312 474 L291 480 L282 499 L264 501 L252 520 L233 516 L218 531 L199 520 L182 522 L169 504 L149 496 L145 478 L124 472 L120 452 L101 443 L107 424 L89 411 L98 392 L82 376 L93 357 L82 339 L99 323 L89 304 L105 287 L96 269 L111 252 L104 233 L121 217 L115 198 L132 180 L127 161 L144 147 L143 128 L160 114 L161 96 L178 84 L178 65 L196 55 L196 37 L212 45 Z"/>
+              <g class="map-marker" data-region="Hamburg & Nord" tabindex="0" role="button" aria-label="Region Hamburg und Nord auswählen">
+                <circle class="marker-halo" cx="241" cy="105" r="16"/><circle class="marker-dot" cx="241" cy="105" r="7"/><text class="city-label" x="252" y="100">Hamburg</text>
+              </g>
+              <g class="map-marker" data-region="Berlin-Brandenburg" tabindex="0" role="button" aria-label="Region Berlin-Brandenburg auswählen">
+                <circle class="marker-halo" cx="335" cy="170" r="16"/><circle class="marker-dot" cx="335" cy="170" r="7"/><text class="city-label" x="345" y="165">Berlin</text>
+              </g>
+              <g class="map-marker" data-region="Rhein-Ruhr" tabindex="0" role="button" aria-label="Region Rhein-Ruhr auswählen">
+                <circle class="marker-halo" cx="133" cy="278" r="16"/><circle class="marker-dot" cx="133" cy="278" r="7"/><text class="city-label" x="75" y="265">Rhein-Ruhr</text>
+              </g>
+              <g class="map-marker selected" data-region="Rhein-Main" tabindex="0" role="button" aria-label="Region Rhein-Main auswählen">
+                <circle class="marker-halo" cx="190" cy="328" r="18"/><circle class="marker-dot" cx="190" cy="328" r="8"/><text class="city-label" x="198" y="322">Rhein-Main</text>
+              </g>
+              <g class="map-marker" data-region="Leipzig-Dresden" tabindex="0" role="button" aria-label="Region Leipzig-Dresden auswählen">
+                <circle class="marker-halo" cx="328" cy="277" r="16"/><circle class="marker-dot" cx="328" cy="277" r="7"/><text class="city-label" x="336" y="273">Leipzig/Dresden</text>
+              </g>
+              <g class="map-marker" data-region="Stuttgart-Südwest" tabindex="0" role="button" aria-label="Region Stuttgart und Südwest auswählen">
+                <circle class="marker-halo" cx="207" cy="414" r="16"/><circle class="marker-dot" cx="207" cy="414" r="7"/><text class="city-label" x="145" y="405">Stuttgart</text>
+              </g>
+              <g class="map-marker" data-region="München-Süd" tabindex="0" role="button" aria-label="Region München und Süd auswählen">
+                <circle class="marker-halo" cx="300" cy="465" r="16"/><circle class="marker-dot" cx="300" cy="465" r="7"/><text class="city-label" x="308" y="461">München</text>
+              </g>
+            </svg>
+            <p class="map-legend">Punkte auswählen · Beispielregionen statt echter Mitgliederzahlen</p>
+          </div>
+          <aside class="map-details" aria-live="polite">
+            <div class="section-kicker">Möglicher Netzwerk-Knoten</div>
+            <h3 id="mapRegionTitle">Rhein-Main</h3>
+            <p id="mapRegionDescription">Startregion aus dem WBS-Umfeld. Denkbarer Knoten für Energieberatung, Handwerk, Industrie, Kommunen sowie Software- und Gründungsteams.</p>
+            <div class="map-tags" id="mapTags"><span>Beratung</span><span>Handwerk</span><span>Industrie</span><span>Software</span></div>
+            <p id="mapRegionQuestion"><strong>Leitfrage:</strong> Welche konkrete Zusammenarbeit lässt sich hier als erstes gemeinsam ausprobieren?</p>
+            <div class="map-actions">
+              <button class="button button-primary button-small" id="mapJoinButton" type="button">Region im Profil vormerken</button>
+              <button class="button button-secondary button-small" id="mapWorkshopButton" type="button">Idee für diese Region</button>
+            </div>
+          </aside>
+        </div>
+        <p class="map-disclaimer">Karte und Hubs sind eine schematische Konzeptansicht. Die Punkte zeigen keine realen Mitglieder, Projekte oder regionalen Kennzahlen; Themenvorschläge müssen mit Menschen vor Ort geprüft werden.</p>
+      </div>
+    </section>
+
+    <section id="netzwerk">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Menschen, die etwas bewegen</div>
+            <h2>Finde deine nächste<br>gute Verbindung.</h2>
+          </div>
+          <p class="section-intro">Wer kann etwas beitragen? Wer sucht Praxiswissen, Projektpartner oder einen neuen Blick auf eine Aufgabe? Hier beginnt das Kennenlernen.</p>
+        </div>
+        <div class="directory-panel">
+          <div class="filters">
+            <label>
+              <span class="sr-only">Profile durchsuchen</span>
+              <input class="field-control" id="searchProfiles" type="search" placeholder="Thema, Fähigkeit, Region oder Person suchen">
+            </label>
+            <label>
+              <span class="sr-only">Fachbereich auswählen</span>
+              <select class="field-control" id="sectorSelect">
+                <option value="">Alle Fachbereiche</option>
+                <option>Beratung</option>
+                <option>Handwerk</option>
+                <option>Industrie</option>
+                <option>Kommune & Politik</option>
+                <option>Planung & Forschung</option>
+                <option>Bildung & Initiative</option>
+                <option>Software & Digitalisierung</option>
+                <option>Start-ups & Gründung</option>
+                <option>Immobilien & Betrieb</option>
+                <option>Finanzierung & Förderung</option>
+              </select>
+            </label>
+          </div>
+          <div class="filter-row">
+            <div class="filter-chips" id="filterChips" aria-label="Fachbereiche schnell filtern"></div>
+            <span class="profile-count" id="profileCount" aria-live="polite"></span>
+          </div>
+          <div class="profile-grid" id="profileGrid"></div>
+        </div>
+        <p class="hero-note">Die angezeigten Personen sind fiktive Beispielprofile. Du kannst in dieser Vorschau ein eigenes Profil lokal ergänzen.</p>
+      </div>
+    </section>
+
+    <section id="nutzen">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Mehrwert für jede Perspektive</div>
+            <h2>Ein Kontakt soll<br>etwas in Bewegung bringen.</h2>
+          </div>
+          <p class="section-intro">Das Netzwerk wird dann nützlich, wenn jede Gruppe einen konkreten Gewinn hat: bessere Umsetzung, neue Kunden, verlässliche Pilotpartner, Wissenstransfer oder ein tragfähiges Geschäftsmodell.</p>
+        </div>
+        <div class="stakeholder-grid">
+          <article class="stakeholder-card"><div class="role">Energieberatung & EEE</div><h3>Vom Bericht zur Umsetzung</h3><p>Finde passende Gewerke, Fachleute und Praxisorte. Teile Erfahrungen zu Audits, Gebäuden, Förderwegen und Messung.</p><div class="outcome">Nutzen: vollständige Projektteams und belastbare Folgeaufträge.</div></article>
+          <article class="stakeholder-card"><div class="role">Handwerk</div><h3>Früher in die Planung kommen</h3><p>Erhalte klarere Projektanfragen, bringe Baustellenwissen früh ein und verknüpfe dich mit Energieberatung und Planung.</p><div class="outcome">Nutzen: weniger Reibung an Schnittstellen und qualifizierte Kontakte.</div></article>
+          <article class="stakeholder-card"><div class="role">Industrie & Gewerbe</div><h3>Effizienz praktisch heben</h3><p>Finde Auditpartner, technische Spezialisten und mögliche Abnehmer oder Partner für Prozesswärme und Abwärme.</p><div class="outcome">Nutzen: konkrete Pilotprojekte, die zu Anlagen und Betriebsabläufen passen.</div></article>
+          <article class="stakeholder-card"><div class="role">Kommunen & Politik</div><h3>Aus Zielen werden Vorhaben</h3><p>Verbinde Verwaltung, lokale Unternehmen, Handwerk, Beratung und Bürgerschaft rund um umsetzbare Energieprojekte.</p><div class="outcome">Nutzen: bessere Rückkopplung aus der Praxis und klarere Projektpartner.</div></article>
+          <article class="stakeholder-card"><div class="role">Software & Daten</div><h3>Reale Probleme statt Demo-Ideen</h3><p>Entwickle mit Fachleuten und Anwendern kleine digitale Werkzeuge, Datenflüsse, Schnittstellen und offene Arbeitsabläufe.</p><div class="outcome">Nutzen: frühes Nutzerfeedback, Testfälle und passende Pilotumgebungen.</div></article>
+          <article class="stakeholder-card"><div class="role">Start-ups & Gründung</div><h3>Ideen am Markt prüfen</h3><p>Finde Problemgeber, Mitgründer, erste Pilotkunden und Fachmentoren. Prüfe Nutzen und Zahlungsbereitschaft vor großem Aufwand.</p><div class="outcome">Nutzen: schnellerer Weg von der Hypothese zu einem getesteten Angebot.</div></article>
+          <article class="stakeholder-card"><div class="role">Immobilien & Betrieb</div><h3>Passende Partner finden</h3><p>Formuliere einen Gebäudebedarf und finde Beratung, Planung, Handwerk und Finanzierung entlang des ganzen Vorhabens.</p><div class="outcome">Nutzen: abgestimmte Maßnahmen und leichterer Zugang zu Umsetzungskompetenz.</div></article>
+          <article class="stakeholder-card"><div class="role">Forschung & Bildung</div><h3>Wissen in die Praxis bringen</h3><p>Arbeite an echten Fragestellungen, finde Praxispartner für Projekte und bringe neue Erkenntnisse in die berufliche Weiterbildung.</p><div class="outcome">Nutzen: Transfer, Lernfälle und gemeinsame Entwicklungsprojekte.</div></article>
+          <article class="stakeholder-card"><div class="role">Finanzierung & Förderung</div><h3>Vorhaben früh verstehen</h3><p>Triff auf Projektteams mit klarerem Bedarf, technischen Annahmen und nachvollziehbaren nächsten Schritten.</p><div class="outcome">Nutzen: besser vorbereitete Förder- und Finanzierungsgespräche.</div></article>
+          <article class="stakeholder-card"><div class="role">Lernende & Fachkräfte</div><h3>Kompetenzen sichtbar machen</h3><p>Finde Lernpartner, Mentoring, Praxisfälle und Zugang zu Menschen aus mehreren Bereichen der Energiewende.</p><div class="outcome">Nutzen: ein greifbares Kompetenzprofil und neue berufliche Wege.</div></article>
+        </div>
+        <div class="how-grid">
+          <article class="how-step"><div class="step-no">WIRKUNG 01</div><h3>Verbindung</h3><p>Passende Personen und Kompetenzen werden auffindbar.</p></article>
+          <article class="how-step"><div class="step-no">WIRKUNG 02</div><h3>Pilot</h3><p>Ein Bedarf wird mit einem Team in einem kleinen Vorhaben geprüft.</p></article>
+          <article class="how-step"><div class="step-no">WIRKUNG 03</div><h3>Nachweis</h3><p>Ergebnisse werden mit Status und Messgrundlage dokumentiert.</p></article>
+        </div>
+        <details class="method-note">
+          <summary>Wie die 100 Nutzen-Iterationen strukturiert wurden</summary>
+          <p class="section-intro" style="margin:9px 0 0">Zehn Beteiligten-Gruppen wurden jeweils an zehn Nutzenfragen geprüft. Jede Kombination ergibt einen konkreten Konzeptcheck: Bedarf, passender Nutzen, Beitrag, mögliche Funktion und erste Erfolgsmessung.</p>
+          <div class="method-columns">
+            <div><h4>Beteiligte Gruppen · 10</h4><ol><li>Energieberatung und EEE</li><li>Handwerk</li><li>Industrie und Gewerbe</li><li>Kommunen und Politik</li><li>Software und Daten</li><li>Start-ups und Gründung</li><li>Immobilien und Gebäudebetrieb</li><li>Forschung und Bildung</li><li>Finanzierung und Förderung</li><li>Lernende und Fachkräfte</li></ol></div>
+            <div><h4>Nutzenfragen · 10</h4><ol><li>Welches konkrete Problem besteht?</li><li>Welches Ergebnis wäre wertvoll?</li><li>Was kann die Gruppe beitragen?</li><li>Welche Partner oder Ressourcen fehlen?</li><li>Wie entsteht schneller erster Nutzen?</li><li>Welcher Kompetenz- oder Karrieregewinn entsteht?</li><li>Welche Erlös- oder Finanzierungschance gibt es?</li><li>Was braucht Vertrauen, Datenschutz und klare Regeln?</li><li>Woran lässt sich Wirkung messen?</li><li>Welche Hürde oder welches Scheitern ist zu prüfen?</li></ol></div>
+          </div>
+          <p class="hero-note">Kreativmethoden: Brainwriting/6-3-5, KJ-Cluster, Mindmap, Kopfstand, SCAMPER, Morphologischer Kasten, Walt-Disney, TRIZ, Synektik und Entscheidungsfilter. V3.1-Rahmen: Spezifikation vor Code, klare Annahmen, kleiner MVP, Audit und Red-Team-Blick.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="bridge-section" id="projekte">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Gemeinsam ins Machen kommen</div>
+            <h2>Gute Fragen werden<br>zu gemeinsamen Projekten.</h2>
+          </div>
+          <p class="section-intro">Eine Projektbörse verbindet Fachwissen mit konkretem Bedarf. Diese drei Karten zeigen, wie daraus gemeinsame Vorhaben entstehen könnten.</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card">
+            <div class="project-type">Projektidee · Wärme</div>
+            <h3>Abwärme trifft Quartier</h3>
+            <p>Industrie, Kommune und Wärmeplanung prüfen gemeinsam, ob verfügbare Abwärme vor Ort nutzbar werden kann.</p>
+            <a class="text-link interest-link" href="#mitmachen" data-interest="Ich möchte bei einer Idee zu Abwärme und Quartierswärme mitdenken.">Interesse eintragen <span aria-hidden="true">↗</span></a>
+          </article>
+          <article class="project-card">
+            <div class="project-type">Projektidee · Gebäude</div>
+            <h3>Sanierung aus einer Hand</h3>
+            <p>Energieberatung und Handwerk entwickeln einen klaren Ablauf, der Planung, Förderung und Umsetzung besser verbindet.</p>
+            <a class="text-link interest-link" href="#mitmachen" data-interest="Ich möchte Beratung und Handwerk bei Gebäudesanierungen verbinden.">Interesse eintragen <span aria-hidden="true">↗</span></a>
+          </article>
+          <article class="project-card">
+            <div class="project-type">Projektidee · Kommune</div>
+            <h3>Lokale Energiewende-Werkstatt</h3>
+            <p>Unternehmen, Verwaltung, Politik und Fachleute bearbeiten eine regionale Energiefrage mit umsetzbaren nächsten Schritten.</p>
+            <a class="text-link interest-link" href="#mitmachen" data-interest="Ich möchte eine lokale Energiewende-Werkstatt mitgestalten.">Interesse eintragen <span aria-hidden="true">↗</span></a>
+          </article>
+          <article class="project-card">
+            <div class="project-type">Code-Lab · Software</div>
+            <h3>Code for Energy Efficiency</h3>
+            <p>Entwickler, Energieberater und Anwender wählen einen wiederkehrenden Arbeitsablauf und bauen einen kleinen testbaren Prototyp.</p>
+            <a class="text-link interest-link" href="#mitmachen" data-interest="Ich möchte bei einem Software- oder Datenprojekt für Energieeffizienz mitarbeiten.">Interesse eintragen <span aria-hidden="true">↗</span></a>
+          </article>
+          <article class="project-card">
+            <div class="project-type">Venture-Lab · Gründung</div>
+            <h3>Energy Venture Lab</h3>
+            <p>Gründungsteams prüfen ein Energieproblem mit potenziellen Kunden, fachlichen Mentoren und einem realen Pilotpartner.</p>
+            <a class="text-link interest-link" href="#mitmachen" data-interest="Ich möchte eine Gründungsidee im Energiebereich validieren oder unterstützen.">Interesse eintragen <span aria-hidden="true">↗</span></a>
+          </article>
+        </div>
+        <p class="bridge-question">Leitfrage für neue Projekte: Welches Problem wird leichter, wenn zwei bisher getrennte Fachbereiche zusammenarbeiten?</p>
+      </div>
+    </section>
+
+    <section class="coding-section" id="code-gruendung">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Softwareentwicklung & Unternehmensgründung</div>
+            <h2>Vom Energieproblem<br>zum getesteten Angebot.</h2>
+          </div>
+          <p class="section-intro">Ein eigener Arbeitsbereich verbindet Fachwissen, Code, Anwender und Gründung. Ziel ist erst ein nachweisbarer Bedarf, dann ein kleiner Pilot und danach ein tragfähiges Produkt oder Angebot.</p>
+        </div>
+        <div class="venture-grid">
+          <article class="venture-card"><div class="mini-kicker">Code & Daten</div><h3>Code-Lab</h3><p>Softwareleute arbeiten mit Energieexperten an klar umrissenen Problemen: Datenqualität, Berichte, Abläufe, Vergleichswerkzeuge und Schnittstellen.</p></article>
+          <article class="venture-card"><div class="mini-kicker">Idee & Markt</div><h3>Gründungswerkstatt</h3><p>Gründer testen Zielgruppe, Schmerzpunkt, Alternativen, Nutzenversprechen und Zahlungsbereitschaft mit echten Gesprächspartnern.</p></article>
+          <article class="venture-card"><div class="mini-kicker">Praxis & Wirkung</div><h3>Pilotkunden-Pool</h3><p>Unternehmen, Kommunen und Gebäudebetreiber können passende Testfelder anbieten. Umfang, Daten und Erfolgskriterien werden vorab festgelegt.</p></article>
+        </div>
+        <div class="venture-path" aria-label="Weg von der Idee zum Angebot">
+          <div class="venture-step"><b>01 · PROBLEM</b><span>Bedarf belegen</span></div>
+          <div class="venture-step"><b>02 · TEAM</b><span>Fachwissen verbinden</span></div>
+          <div class="venture-step"><b>03 · PROTOTYP</b><span>klein bauen</span></div>
+          <div class="venture-step"><b>04 · PILOT</b><span>mit Anwendern testen</span></div>
+          <div class="venture-step"><b>05 · GESCHÄFT</b><span>Nutzen & Erlös prüfen</span></div>
+        </div>
+        <div class="how-grid">
+          <article class="how-step"><div class="step-no">IM CODE-LAB</div><h3>Problemgeber</h3><p>Ein Betrieb, eine Kommune oder ein Energieberater beschreibt Arbeitsablauf, Nutzer und echte Hürde.</p></article>
+          <article class="how-step"><div class="step-no">IM CODE-LAB</div><h3>Produktteam</h3><p>Fachperson, Product/UX und Entwickler legen Daten, Akzeptanzkriterien, Sicherheit und Test fest.</p></article>
+          <article class="how-step"><div class="step-no">IM VENTURE-LAB</div><h3>Gründungsteam</h3><p>Validiert Zielgruppe, Alternative, Zahlungsbereitschaft, Pilotzugang und laufende Pflege des Angebots.</p></article>
+        </div>
+        <p class="hero-note">Softwareprojekte starten mit einem klaren Auftrag: Problem, Datenherkunft, Zugriffsrechte, Erfolgskriterium, Code-/Nutzungsrechte und Wartungsverantwortung festhalten.</p>
+        <h3 style="margin:31px 0 0;letter-spacing:-.025em">Mögliche Wege, das Netzwerk zu tragen</h3>
+        <div class="model-grid">
+          <article class="model-card"><h4>Offenes Fachnetzwerk</h4><p>Niedrige Einstiegshürde; Finanzierung etwa über Partner und Veranstaltungen prüfen.</p></article>
+          <article class="model-card"><h4>Mitgliederverein</h4><p>Gemeinschaft und Mitbestimmung; Beitragshöhe und laufende Koordination müssen tragfähig sein.</p></article>
+          <article class="model-card"><h4>Innovationsprogramm</h4><p>Unternehmen oder Kommunen beauftragen klar definierte Pilot- und Entwicklungsprojekte.</p></article>
+          <article class="model-card"><h4>Hybridmodell</h4><p>Gemeinnütziger Austausch und entgeltliche Projektarbeit werden organisatorisch sauber getrennt.</p></article>
+        </div>
+        <div class="mvp-callout"><strong>Empfohlener erster Start:</strong> Mitgliederprofile mit Suche, eine Projekt- und Pilotbörse sowie eine monatliche fachübergreifende Runde. Softwareentwicklung und Gründung laufen als gezielte Arbeitsgruppe mit; so entstehen echte Anwendungsfälle, ohne den Start mit zu vielen Funktionen zu überladen.</div>
+        <p class="hero-note">Geschäftsmodell noch offen: zuerst mit Gesprächen und einem kleinen Pilot prüfen, wer welchen Nutzen tatsächlich bezahlt. Keine Energieeinsparung gilt als nachgewiesen, bevor Messung und Bilanzgrenze feststehen.</p>
+      </div>
+    </section>
+
+    <section id="formate">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Austausch, der im Alltag hilft</div>
+            <h2>Ein Netzwerk braucht<br>gute Begegnungen.</h2>
+          </div>
+          <p class="section-intro">Kleine, regelmäßige Formate machen Kontakte tragfähig — vom kurzen digitalen Austausch bis zum Blick in die Werkstatt.</p>
+        </div>
+        <div class="formats-grid">
+          <article class="format-card">
+            <div class="format-icon" aria-hidden="true">45</div>
+            <h3>Energie-Brücken-Runde</h3>
+            <p>45 Minuten, eine konkrete Frage, mehrere Fachperspektiven. Zum Beispiel Wärmepumpe aus Sicht von Planung, SHK und Kommune.</p>
+          </article>
+          <article class="format-card">
+            <div class="format-icon" aria-hidden="true">↗</div>
+            <h3>Einblick vor Ort</h3>
+            <p>Mitglieder öffnen einen Betrieb, ein Projekt oder eine Baustelle. So wird aus einer Visitenkarte ein gemeinsames Verständnis.</p>
+          </article>
+          <article class="format-card">
+            <div class="format-icon" aria-hidden="true">?</div>
+            <h3>Frag die Praxis</h3>
+            <p>Eine offene Frage aus dem Arbeitsalltag bekommt Antworten von Menschen, die das Thema aus unterschiedlichen Rollen kennen.</p>
+          </article>
+        </div>
+        <div class="how-grid" aria-label="So funktioniert das Netzwerk">
+          <article class="how-step"><div class="step-no">01 · VORSTELLEN</div><h3>Zeig, wer du bist</h3><p>Rolle, Schwerpunkte und Region in wenigen Zeilen.</p></article>
+          <article class="how-step"><div class="step-no">02 · VERBINDEN</div><h3>Finde passende Menschen</h3><p>Suche nach Fachbereich, Thema und dem, was jemand sucht oder anbietet.</p></article>
+          <article class="how-step"><div class="step-no">03 · ZUSAMMENARBEITEN</div><h3>Mach eine Idee konkret</h3><p>Bring eine Frage ein, starte einen Austausch oder finde Projektpartner.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="creative-lab-section" id="kreativwerkstatt">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Gemeinsam weiterentwickeln</div>
+            <h2>Die Kreativwerkstatt<br>des Netzwerks.</h2>
+          </div>
+          <p class="section-intro">Hier werden Herausforderungen aus der Praxis zu Ideen, Teams und kleinen Tests. Die Werkstatt hilft auch, das Netzwerk selbst laufend zu verbessern.</p>
+        </div>
+        <div class="lab-grid">
+          <div class="lab-panel">
+            <h3>Eine Fragestellung öffnen</h3>
+            <p>Wähle ein Thema und eine Kreativmethode. Die Impulse helfen beim Start einer moderierten Runde.</p>
+            <div class="lab-controls">
+              <div class="form-field">
+                <label for="workshopTheme">Themenfeld</label>
+                <select id="workshopTheme" class="field-control">
+                  <option>Netzwerk selbst weiterentwickeln</option>
+                  <option>Gebäude und Sanierung</option>
+                  <option>Industrie und Abwärme</option>
+                  <option>Kommune und Wärmewende</option>
+                  <option>Software und Energiedaten</option>
+                  <option>Gründung und Geschäftsmodell</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="workshopMethod">Kreativmethode</label>
+                <select id="workshopMethod" class="field-control">
+                  <option value="brainwriting">Brainwriting / 6-3-5</option>
+                  <option value="scamper">SCAMPER</option>
+                  <option value="headstand">Kopfstand</option>
+                  <option value="analogy">Analogietransfer</option>
+                  <option value="morphology">Morphologischer Kasten</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="workshopChallenge">Unsere Frage</label>
+                <textarea id="workshopChallenge" class="field-control" maxlength="300">Wie kann unser Netzwerk in den nächsten 90 Tagen eine konkrete Zusammenarbeit zwischen mehreren Fachbereichen ermöglichen?</textarea>
+              </div>
+              <button class="button button-primary button-small" id="workshopGenerate" type="button">Kreativimpulse anzeigen</button>
+            </div>
+            <div class="lab-question-list" id="workshopQuestions" aria-live="polite"></div>
+          </div>
+          <div class="lab-panel">
+            <h3>Ideenwand</h3>
+            <p>Halte einen Vorschlag fest und ergänze den nächsten kleinen Schritt. Einträge bleiben in dieser Vorschau lokal.</p>
+            <form id="ideaForm" class="lab-controls">
+              <div class="form-field">
+                <label for="ideaTitle">Idee in einem Satz *</label>
+                <input id="ideaTitle" class="field-control" maxlength="90" required placeholder="z. B. Code-Sprechstunde für Energieberater">
+              </div>
+              <div class="form-field">
+                <label for="ideaBody">Nutzen und nächster Schritt *</label>
+                <textarea id="ideaBody" class="field-control" maxlength="500" required placeholder="Für wen ist es nützlich? Was testen wir zuerst?"></textarea>
+              </div>
+              <button class="button button-primary button-small" type="submit">Idee lokal festhalten</button>
+            </form>
+            <div class="idea-wall" id="ideaWall" aria-live="polite"></div>
+            <div class="lab-footer">
+              <span id="ideaCount">Noch keine Ideen gespeichert.</span>
+              <span><button class="plain-button" type="button" id="exportIdeas">Ideen exportieren</button> · <button class="plain-button" type="button" id="clearIdeas">Ideenwand leeren</button></span>
+            </div>
+            <div class="privacy-note">Für einen echten gemeinsamen Ideenraum müssten Einträge zentral gesammelt und moderiert werden. Diese Offline-Vorschau überträgt nichts.</div>
+          </div>
+        </div>
+        <div class="how-grid">
+          <article class="how-step"><div class="step-no">60-MINUTEN-FORMAT</div><h3>10 · 15 · 20 · 15</h3><p>10 Minuten Problem klären, 15 Ideen öffnen, 20 Minuten kombinieren und auswählen, 15 Minuten Testschritt festlegen.</p></article>
+          <article class="how-step"><div class="step-no">ERGEBNIS</div><h3>Eine Idee mit Besitzer</h3><p>Jede ausgewählte Idee bekommt eine verantwortliche Person, beteiligte Fachbereiche und einen ersten Prüftermin.</p></article>
+          <article class="how-step"><div class="step-no">LERNEN</div><h3>Netzwerk verbessern</h3><p>Nach dem Test werden Nutzen, Beteiligung und Hindernisse besprochen. Gute Formate werden wiederholt oder angepasst.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="join-section" id="mitmachen">
+      <div class="wrap join-grid">
+        <div class="join-copy">
+          <div class="section-kicker">Dein Platz im Netzwerk</div>
+          <h2>Stell dich kurz vor.</h2>
+          <p>Ein guter Einstieg braucht keinen langen Lebenslauf. Schreib, woran du arbeitest, was du gern teilst und mit wem du dich vernetzen möchtest.</p>
+          <div class="note-box"><strong>Ein guter Steckbrief beantwortet:</strong><br>Was mache ich? Was kann ich beitragen? Was suche ich? Welche Themen interessieren mich?</div>
+        </div>
+        <form class="form-card" id="profileForm">
+          <h3>Dein Netzwerk-Profil</h3>
+          <p class="form-sub">In dieser Vorschau wird dein Profil nur in diesem Browser gespeichert.</p>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="profileName">Name oder Anzeigename *</label>
+              <input id="profileName" name="name" required maxlength="60" placeholder="z. B. Alex Beispiel">
+            </div>
+            <div class="form-field">
+              <label for="profileRole">Rolle / Beruf *</label>
+              <input id="profileRole" name="role" required maxlength="80" placeholder="z. B. Energieberaterin">
+            </div>
+            <div class="form-field">
+              <label for="profileSector">Fachbereich *</label>
+              <select id="profileSector" name="sector" required>
+                <option value="">Bitte auswählen</option>
+                <option>Beratung</option>
+                <option>Handwerk</option>
+                <option>Industrie</option>
+                <option>Kommune & Politik</option>
+                <option>Planung & Forschung</option>
+                <option>Bildung & Initiative</option>
+                <option>Software & Digitalisierung</option>
+                <option>Start-ups & Gründung</option>
+                <option>Immobilien & Betrieb</option>
+                <option>Finanzierung & Förderung</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="profileRegion">Region</label>
+              <input id="profileRegion" name="region" maxlength="60" placeholder="z. B. Rhein-Main">
+            </div>
+            <div class="form-field full">
+              <label for="profileFocus">Themen / Schwerpunkte *</label>
+              <input id="profileFocus" name="focus" required maxlength="100" placeholder="z. B. Energieaudit, Wärmepumpe, Förderung">
+            </div>
+            <div class="form-field">
+              <label for="profileOffer">Das kann ich beitragen</label>
+              <textarea id="profileOffer" name="offer" maxlength="240" placeholder="Praxiswissen, Erfahrung, Kontakte, Projektidee …"></textarea>
+            </div>
+            <div class="form-field">
+              <label for="profileSeek">Das suche ich</label>
+              <textarea id="profileSeek" name="seek" maxlength="240" placeholder="Austausch, Mitstreiter, fachliche Unterstützung …"></textarea>
+            </div>
+            <div class="form-field full">
+              <label for="profileContact">Kontaktweg (optional)</label>
+              <input id="profileContact" name="contact" maxlength="100" placeholder="Nur eintragen, wenn du ihn in dieser lokalen Vorschau sehen möchtest">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="button button-primary button-small" type="submit">Profil lokal hinzufügen <span aria-hidden="true">↗</span></button>
+            <button class="button button-outline button-small" type="reset">Felder leeren</button>
+          </div>
+          <p class="form-message" id="formMessage" role="status"></p>
+          <div class="privacy-note">Lokale Vorschau: Es gibt keinen Server und es werden keine Daten übertragen. Profile erscheinen nur in diesem Browser. Browserdaten sind nicht verschlüsselt; auf gemeinsam genutzten Geräten bitte keine privaten Kontaktdaten eintragen. Export/Import teilt eine JSON-Datei manuell, synchronisiert aber nichts automatisch.</div>
+          <div class="local-tools">
+            <span>Eigene Profile bleiben lokal. Export/Import hilft beim manuellen Teilen im Kollegenkreis.</span>
+            <div>
+              <button class="plain-button" type="button" id="exportProfiles">Eigene Profile exportieren</button>
+              <span aria-hidden="true"> · </span>
+              <button class="plain-button" type="button" id="importProfiles">Profile aus JSON übernehmen</button>
+              <input type="file" id="importProfilesFile" accept="application/json,.json" hidden>
+              <span aria-hidden="true"> · </span>
+              <button class="plain-button" type="button" id="resetProfiles">Demo zurücksetzen</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-brand">energie<span>brücken</span> · Kolleg:innen-Version V1</div>
+      <div class="footer-disclaimer">Ein offenes Netzwerk für Energieeffizienz und Energiewende. Beispielprofile sind fiktiv. Diese Vorschau braucht keine externen Dienste und synchronisiert keine Daten.</div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+      var STORAGE_KEY = "energiebruecken.profile.v1";
+      var sectors = ["Beratung", "Handwerk", "Industrie", "Kommune & Politik", "Planung & Forschung", "Bildung & Initiative", "Software & Digitalisierung", "Start-ups & Gründung", "Immobilien & Betrieb", "Finanzierung & Förderung"];
+      var seedProfiles = [
+        { id: "demo-1", name: "Mara Beispiel", role: "Energieberaterin", sector: "Beratung", region: "Frankfurt am Main", focus: "Energieaudit · Gebäude · Förderung", offer: "Ich bringe Struktur in Energiefragen und begleite Projekte von der Analyse bis zum Maßnahmenplan.", seek: "Austausch mit Handwerk, Industrie und Kommunen.", contact: "", demo: true },
+        { id: "demo-2", name: "Alex Muster", role: "SHK-Meister", sector: "Handwerk", region: "Offenbach", focus: "Wärmepumpen · Hydraulik · Inbetriebnahme", offer: "Praxiswissen zu Einbau, Schnittstellen und dem, was auf der Baustelle funktioniert.", seek: "Frühe Zusammenarbeit mit Planung und Energieberatung.", contact: "", demo: true },
+        { id: "demo-3", name: "Kim Demo", role: "Energiemanagerin", sector: "Industrie", region: "Hanau", focus: "Energiemanagement · Abwärme · Prozesse", offer: "Einblicke in industrielle Abläufe, Verbräuche und betriebliche Entscheidungswege.", seek: "Partner für Effizienzprojekte und nutzbare Abwärme.", contact: "", demo: true },
+        { id: "demo-4", name: "Robin Beispiel", role: "Klimaschutzmanager", sector: "Kommune & Politik", region: "Rhein-Main", focus: "Wärmeplanung · Beteiligung · Förderprojekte", offer: "Ich verknüpfe kommunale Ziele mit lokalen Akteuren und konkreten Vorhaben.", seek: "Fachleute, die Projekte vor Ort mitentwickeln.", contact: "", demo: true },
+        { id: "demo-5", name: "Sam Neumann", role: "Softwareentwickler", sector: "Software & Digitalisierung", region: "Frankfurt am Main", focus: "Web-Apps · Datenqualität · Schnittstellen", offer: "Ich entwickle schlanke digitale Werkzeuge und übersetze Abläufe in testbare Funktionen.", seek: "Echte Nutzerprobleme, Energiefachleute und Pilotpartner.", contact: "", demo: true },
+        { id: "demo-6", name: "Jo Kramer", role: "Gründerin im Energiebereich", sector: "Start-ups & Gründung", region: "Rhein-Main", focus: "Kundengespräche · MVP · Geschäftsmodell", offer: "Ich bringe frühe Ideen in Tests mit potenziellen Kunden und Partnern.", seek: "Mitgründer, Pilotkunden und fachliche Mentoren.", contact: "", demo: true },
+        { id: "demo-7", name: "Nika Beispiel", role: "Gebäudebetreiberin", sector: "Immobilien & Betrieb", region: "Offenbach", focus: "Betrieb · Sanierung · Investitionsplanung", offer: "Ich kann Betreiberperspektive und reale Abläufe aus dem Gebäudebetrieb einbringen.", seek: "Abgestimmte Teams aus Beratung, Planung und Handwerk.", contact: "", demo: true },
+        { id: "demo-8", name: "Chris Demo", role: "Förder- und Finanzierungsexperte", sector: "Finanzierung & Förderung", region: "Rhein-Main", focus: "Projektfinanzierung · Förderlogik · Business Cases", offer: "Ich helfe, Projektannahmen und Finanzierungsbedarf früh sichtbar zu machen.", seek: "Technisch plausible Vorhaben mit klaren nächsten Schritten.", contact: "", demo: true }
+      ];
+
+      function normalizeProfile(raw, index, prefix) {
+        if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+        function field(key, max) {
+          return typeof raw[key] === "string" ? raw[key].trim().slice(0, max) : "";
+        }
+        var name = field("name", 60);
+        var role = field("role", 80);
+        var sector = field("sector", 80);
+        if (!name || !role || sectors.indexOf(sector) === -1) return null;
+        return {
+          id: prefix + "-" + Date.now() + "-" + index,
+          name: name, role: role, sector: sector,
+          region: field("region", 60), focus: field("focus", 100),
+          offer: field("offer", 240), seek: field("seek", 240),
+          contact: field("contact", 100), demo: raw.demo === true
+        };
+      }
+
+      function loadProfiles() {
+        try {
+          var stored = localStorage.getItem(STORAGE_KEY);
+          if (stored) {
+            var parsed = JSON.parse(stored);
+            if (Array.isArray(parsed)) {
+              var valid = parsed.slice(0, 500).map(function (item, index) {
+                var normalized = normalizeProfile(item, index, "stored");
+                if (normalized && typeof item.id === "string" && item.id.length <= 100) normalized.id = item.id;
+                return normalized;
+              }).filter(Boolean);
+              return valid;
+            }
+          }
+        } catch (error) {}
+        return seedProfiles.slice();
+      }
+
+      var profiles = loadProfiles();
+      var activeSector = "";
+      var searchInput = document.getElementById("searchProfiles");
+      var sectorSelect = document.getElementById("sectorSelect");
+      var grid = document.getElementById("profileGrid");
+      var count = document.getElementById("profileCount");
+      var chips = document.getElementById("filterChips");
+      var form = document.getElementById("profileForm");
+      var message = document.getElementById("formMessage");
+
+      function saveProfiles() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(profiles));
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+
+      function initials(name) {
+        return String(name || "?").trim().split(/\s+/).slice(0, 2).map(function (part) { return part.charAt(0); }).join("").toUpperCase();
+      }
+
+      function addText(parent, tag, className, value) {
+        var element = document.createElement(tag);
+        if (className) element.className = className;
+        element.textContent = value || "";
+        parent.appendChild(element);
+        return element;
+      }
+
+      function renderChips() {
+        chips.replaceChildren();
+        var all = document.createElement("button");
+        all.type = "button";
+        all.className = "chip" + (activeSector === "" ? " active" : "");
+        all.textContent = "Alle";
+        all.addEventListener("click", function () { activeSector = ""; sectorSelect.value = ""; render(); });
+        chips.appendChild(all);
+        sectors.forEach(function (sector) {
+          var chip = document.createElement("button");
+          chip.type = "button";
+          chip.className = "chip" + (activeSector === sector ? " active" : "");
+          chip.textContent = sector;
+          chip.addEventListener("click", function () { activeSector = sector; sectorSelect.value = sector; render(); });
+          chips.appendChild(chip);
+        });
+      }
+
+      function makeCard(profile) {
+        var card = document.createElement("article");
+        card.className = "profile-card";
+        var top = document.createElement("div");
+        top.className = "card-top";
+        var avatar = addText(top, "div", "avatar", initials(profile.name));
+        avatar.setAttribute("aria-hidden", "true");
+        var identity = document.createElement("div");
+        addText(identity, "div", "role-tag", profile.sector);
+        addText(identity, "h3", "", profile.name);
+        top.appendChild(identity);
+        card.appendChild(top);
+        addText(card, "p", "", profile.role);
+        addText(card, "p", "profile-location", profile.region ? "⌖ " + profile.region : "Region offen");
+        addText(card, "div", "card-label", "Themen");
+        addText(card, "p", "", profile.focus || "Noch keine Schwerpunkte eingetragen");
+        if (profile.offer) {
+          addText(card, "div", "card-label", "Kann beitragen");
+          addText(card, "p", "", profile.offer);
+        }
+        if (profile.seek) {
+          addText(card, "div", "card-label", "Sucht");
+          addText(card, "p", "", profile.seek);
+        }
+        if (profile.contact) {
+          addText(card, "div", "card-label", "Kontakt");
+          addText(card, "p", "", profile.contact);
+        }
+        var tags = document.createElement("div");
+        tags.className = "profile-tags";
+        String(profile.focus || "").split(/[·,;]/).map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 3).forEach(function (tag) {
+          addText(tags, "span", "tiny-tag", tag);
+        });
+        card.appendChild(tags);
+        addText(card, "div", "profile-origin", profile.demo ? "Fiktives Beispielprofil" : "Lokal in diesem Browser gespeichert");
+        if (!profile.demo) {
+          var actions = document.createElement("div");
+          actions.className = "profile-actions";
+          var remove = document.createElement("button");
+          remove.type = "button";
+          remove.className = "plain-button";
+          remove.textContent = "Lokales Profil entfernen";
+          remove.setAttribute("aria-label", "Lokales Profil von " + String(profile.name || "Person") + " entfernen");
+          remove.addEventListener("click", function () {
+            if (!window.confirm("Dieses lokal gespeicherte Profil entfernen?")) return;
+            profiles = profiles.filter(function (item) { return item.id !== profile.id; });
+            saveProfiles();
+            render();
+            message.textContent = "Lokales Profil entfernt.";
+          });
+          actions.appendChild(remove);
+          card.appendChild(actions);
+        }
+        return card;
+      }
+
+      function render() {
+        renderChips();
+        var term = searchInput.value.trim().toLocaleLowerCase("de-DE");
+        var shown = profiles.filter(function (profile) {
+          var matchesSector = !activeSector || profile.sector === activeSector;
+          var haystack = [profile.name, profile.role, profile.sector, profile.region, profile.focus, profile.offer, profile.seek, profile.contact].join(" ").toLocaleLowerCase("de-DE");
+          return matchesSector && (!term || haystack.indexOf(term) !== -1);
+        });
+        grid.replaceChildren();
+        if (shown.length === 0) {
+          addText(grid, "p", "empty-state", "Keine Profile gefunden. Passe deine Suche oder den Fachbereich an.");
+        } else {
+          shown.forEach(function (profile) { grid.appendChild(makeCard(profile)); });
+        }
+        count.textContent = shown.length + " von " + profiles.length + " Profilen";
+      }
+
+      searchInput.addEventListener("input", render);
+      sectorSelect.addEventListener("change", function () { activeSector = sectorSelect.value; render(); });
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var data = new FormData(form);
+        var profile = {
+          id: "local-" + Date.now(),
+          name: String(data.get("name") || "").trim(),
+          role: String(data.get("role") || "").trim(),
+          sector: String(data.get("sector") || "").trim(),
+          region: String(data.get("region") || "").trim(),
+          focus: String(data.get("focus") || "").trim(),
+          offer: String(data.get("offer") || "").trim(),
+          seek: String(data.get("seek") || "").trim(),
+          contact: String(data.get("contact") || "").trim(),
+          demo: false
+        };
+        profiles.unshift(profile);
+        var saved = saveProfiles();
+        render();
+        form.reset();
+        message.textContent = saved ? "Profil ergänzt. Es bleibt lokal in diesem Browser gespeichert." : "Profil wurde in dieser Ansicht ergänzt, konnte aber nicht dauerhaft im Browser gespeichert werden.";
+        document.getElementById("netzwerk").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      document.getElementById("exportProfiles").addEventListener("click", function () {
+        var payload = { title: "Energiebrücken Profile", schemaVersion: 1, exportedAt: new Date().toISOString(), profiles: profiles.filter(function (profile) { return !profile.demo; }) };
+        var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        link.href = url;
+        link.download = "energiebruecken-profile.json";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        message.textContent = "JSON-Datei mit " + payload.profiles.length + " eigenen Profil(en) erstellt. Fiktive Demo-Profile wurden ausgelassen.";
+      });
+
+      document.getElementById("resetProfiles").addEventListener("click", function () {
+        if (!window.confirm("Alle lokal hinzugefügten und importierten Profile entfernen und nur die fiktiven Demo-Profile anzeigen?")) return;
+        profiles = seedProfiles.slice();
+        try { localStorage.removeItem(STORAGE_KEY); } catch (error) {}
+        searchInput.value = "";
+        sectorSelect.value = "";
+        activeSector = "";
+        message.textContent = "Die Vorschau zeigt wieder die acht fiktiven Beispielprofile.";
+        render();
+      });
+
+      var importButton = document.getElementById("importProfiles");
+      var importInput = document.getElementById("importProfilesFile");
+      importButton.addEventListener("click", function () { importInput.click(); });
+      importInput.addEventListener("change", function () {
+        var file = importInput.files && importInput.files[0];
+        if (!file) return;
+        if (file.size > 1024 * 1024) {
+          message.textContent = "Import abgebrochen: JSON-Dateien dürfen höchstens 1 MB groß sein.";
+          importInput.value = "";
+          return;
+        }
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var payload = JSON.parse(String(reader.result || ""));
+            if (!payload || !Array.isArray(payload.profiles) || payload.profiles.length > 200) throw new Error("Format");
+            var existing = {};
+            profiles.forEach(function (profile) {
+              existing[[profile.name, profile.role, profile.region].join("|").toLocaleLowerCase("de-DE")] = true;
+            });
+            var imported = payload.profiles.filter(function (item) { return item && item.demo !== true; }).map(function (item, index) {
+              return normalizeProfile(item, index, "import");
+            }).filter(Boolean).filter(function (profile) {
+              var key = [profile.name, profile.role, profile.region].join("|").toLocaleLowerCase("de-DE");
+              if (existing[key]) return false;
+              existing[key] = true;
+              return true;
+            });
+            if (!imported.length) {
+              message.textContent = "Keine neuen gültigen Profile gefunden. Fiktive und bereits vorhandene Profile werden übersprungen.";
+              return;
+            }
+            profiles = imported.concat(profiles).slice(0, 500);
+            var saved = saveProfiles();
+            render();
+            message.textContent = imported.length + " Profil(e) übernommen" + (saved ? " und lokal gespeichert." : "; diese Ansicht konnte nicht dauerhaft gespeichert werden.");
+          } catch (error) {
+            message.textContent = "Import nicht möglich: Bitte eine passende Energiebrücken-JSON-Datei auswählen.";
+          } finally {
+            importInput.value = "";
+          }
+        };
+        reader.onerror = function () { message.textContent = "Die JSON-Datei konnte nicht gelesen werden."; importInput.value = ""; };
+        reader.readAsText(file);
+      });
+
+      document.querySelectorAll(".interest-link").forEach(function (link) {
+        link.addEventListener("click", function () {
+          document.getElementById("profileSeek").value = link.getAttribute("data-interest") || "";
+        });
+      });
+
+      var regionData = {
+        "Hamburg & Nord": { description: "Denkbarer Knoten für eine erste regionale Runde. Zu prüfen ist, welche Gebäude-, Gewerbe- oder Energiefragen lokale Akteure gemeinsam bearbeiten möchten.", tags: ["Gebäude", "Gewerbe", "Energieprojekte"], question: "Welche konkrete regionale Frage könnte mehrere Fachbereiche an einen Tisch bringen?" },
+        "Berlin-Brandenburg": { description: "Möglicher Treffpunkt für Verwaltung, Forschung, Softwareteams und Gründungen. Die passenden Kontakte und Pilotfelder wären vor Ort zu ermitteln.", tags: ["Verwaltung", "Forschung", "Software", "Gründung"], question: "Welche Idee lässt sich hier mit einem öffentlichen oder betrieblichen Pilotpartner testen?" },
+        "Rhein-Ruhr": { description: "Vorgeschlagene Region für gemeinsame Vorhaben von Industrie, Handwerk, Beratung und Kommunen. Welche Themen tragen, müsste eine regionale Runde zeigen.", tags: ["Industrie", "Handwerk", "Kommunen"], question: "Welcher Effizienz- oder Wärmebedarf braucht ein interdisziplinäres Team?" },
+        "Rhein-Main": { description: "Startregion aus dem WBS-Umfeld. Denkbarer Knoten für Energieberatung, Handwerk, Industrie, Kommunen sowie Software- und Gründungsteams.", tags: ["Beratung", "Handwerk", "Industrie", "Software"], question: "Welche konkrete Zusammenarbeit lässt sich hier als erstes gemeinsam ausprobieren?" },
+        "Leipzig-Dresden": { description: "Möglicher Knoten für Betriebe, Kommunen, Forschung und digitale Fachleute. Themen und regionale Partner sollten gemeinsam ausgewählt werden.", tags: ["Betriebe", "Kommunen", "Forschung", "Digital"], question: "Welche Praxisfrage eignet sich für einen kleinen, messbaren Pilot?" },
+        "Stuttgart-Südwest": { description: "Vorgeschlagener Netzwerkraum für technische Fachleute, Unternehmen, Softwareentwicklung und Energieberatung. Der Nutzen wird mit möglichen Mitgliedern geprüft.", tags: ["Technik", "Unternehmen", "Software"], question: "Welche wiederkehrende Energieaufgabe könnte ein Team einfacher machen?" },
+        "München-Süd": { description: "Mögliche Region für Gebäudebetreiber, Beratung, Technologie und Gründungen. Der erste Schritt wäre ein gemeinsames Problemgespräch.", tags: ["Gebäude", "Technologie", "Gründung"], question: "Wer hat ein reales Problem, das ein kleines Netzwerkteam lösen kann?" }
+      };
+      var selectedRegion = "Rhein-Main";
+      function selectRegion(region) {
+        if (!regionData[region]) return;
+        selectedRegion = region;
+        document.querySelectorAll(".map-marker").forEach(function (marker) {
+          var selected = marker.getAttribute("data-region") === region;
+          marker.classList.toggle("selected", selected);
+          marker.setAttribute("aria-pressed", selected ? "true" : "false");
+        });
+        var data = regionData[region];
+        document.getElementById("mapRegionTitle").textContent = region;
+        document.getElementById("mapRegionDescription").textContent = data.description;
+        document.getElementById("mapRegionQuestion").textContent = "Leitfrage: " + data.question;
+        var tagArea = document.getElementById("mapTags");
+        tagArea.replaceChildren();
+        data.tags.forEach(function (tag) { addText(tagArea, "span", "", tag); });
+      }
+      document.querySelectorAll(".map-marker").forEach(function (marker) {
+        marker.addEventListener("click", function () { selectRegion(marker.getAttribute("data-region")); });
+        marker.addEventListener("keydown", function (event) {
+          if (event.key === "Enter" || event.key === " ") { event.preventDefault(); selectRegion(marker.getAttribute("data-region")); }
+        });
+      });
+      document.getElementById("mapJoinButton").addEventListener("click", function () {
+        document.getElementById("profileRegion").value = selectedRegion;
+        document.getElementById("mitmachen").scrollIntoView({ behavior: "smooth", block: "start" });
+        document.getElementById("profileName").focus({ preventScroll: true });
+      });
+
+      var workshopPrompts = {
+        brainwriting: ["Schreibe drei unterschiedliche Lösungen für: {challenge}", "Welche Idee wird besser, wenn Beratung, Praxis und Software zusammenarbeiten?", "Was davon könnte ein kleines Team in 30 Tagen testen?"],
+        scamper: ["Ersetzen: Was an der heutigen Lösung könnte einfacher oder zugänglicher werden?", "Kombinieren: Welche zwei Angebote oder Kompetenzen ergeben zusammen mehr Nutzen?", "Weglassen oder umkehren: Was wäre der kleinste Test, der die Annahme prüft?"],
+        headstand: ["Wie würden wir sicher verhindern, dass {challenge} gelingt?", "Welche dieser Hindernisse sehen wir bereits im Alltag?", "Wie drehen wir ein Hindernis in einen konkreten ersten Schritt?"],
+        analogy: ["Wie lösen ähnliche Kooperationsprobleme Makerspaces, Open-Source-Teams oder Branchencluster?", "Welches Prinzip daraus passt zu {theme}?", "Was übernehmen wir als einen kleinen, überprüfbaren Versuch?"],
+        morphology: ["Kombiniere Zielgruppe, Fachpartner, Format, digitale Hilfe und Finanzierung zu drei Varianten.", "Welche Variante hat einen klaren Nutzer, einen Verantwortlichen und einen realistischen Pilotort?", "Welche Annahme muss vor einer größeren Investition zuerst stimmen?"]
+      };
+      var workshopMethodNames = { brainwriting: "Brainwriting / 6-3-5", scamper: "SCAMPER", headstand: "Kopfstand", analogy: "Analogietransfer", morphology: "Morphologischer Kasten" };
+      function renderWorkshopQuestions() {
+        var method = document.getElementById("workshopMethod").value;
+        var theme = document.getElementById("workshopTheme").value;
+        var challenge = document.getElementById("workshopChallenge").value.trim() || "Wie können wir daraus einen nützlichen, kleinen Versuch machen?";
+        var list = document.getElementById("workshopQuestions");
+        list.replaceChildren();
+        addText(list, "div", "idea-meta", "Methode: " + workshopMethodNames[method] + " · Themenfeld: " + theme);
+        (workshopPrompts[method] || workshopPrompts.brainwriting).forEach(function (prompt) {
+          addText(list, "div", "lab-question", prompt.replace("{challenge}", challenge).replace("{theme}", theme));
+        });
+      }
+      document.getElementById("workshopGenerate").addEventListener("click", renderWorkshopQuestions);
+      document.getElementById("mapWorkshopButton").addEventListener("click", function () {
+        document.getElementById("workshopTheme").value = "Netzwerk selbst weiterentwickeln";
+        document.getElementById("workshopChallenge").value = "Wie kann das Netzwerk in " + selectedRegion + " in den nächsten 90 Tagen eine nützliche Zusammenarbeit zwischen mehreren Fachbereichen starten?";
+        renderWorkshopQuestions();
+        document.getElementById("kreativwerkstatt").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      var IDEA_KEY = "energiebruecken.creative-ideas.v1";
+      function loadIdeas() {
+        try {
+          var saved = JSON.parse(localStorage.getItem(IDEA_KEY) || "[]");
+          return Array.isArray(saved) ? saved : [];
+        } catch (error) { return []; }
+      }
+      var ideas = loadIdeas();
+      function saveIdeas() {
+        try { localStorage.setItem(IDEA_KEY, JSON.stringify(ideas)); return true; }
+        catch (error) { return false; }
+      }
+      function renderIdeas() {
+        var wall = document.getElementById("ideaWall");
+        wall.replaceChildren();
+        if (!ideas.length) addText(wall, "div", "idea-empty", "Noch keine Ideen gespeichert. Starte mit einer Frage und halte den ersten Testschritt fest.");
+        ideas.forEach(function (idea) {
+          var card = document.createElement("article");
+          card.className = "idea-card";
+          addText(card, "h4", "", idea.title);
+          addText(card, "p", "", idea.body);
+          var dateText = idea.createdAt ? new Date(idea.createdAt).toLocaleDateString("de-DE") : "";
+          addText(card, "div", "idea-meta", [idea.theme, idea.method, idea.region, dateText].filter(Boolean).join(" · "));
+          wall.appendChild(card);
+        });
+        document.getElementById("ideaCount").textContent = ideas.length ? ideas.length + " Idee(n) lokal gespeichert" : "Noch keine Ideen gespeichert.";
+      }
+      document.getElementById("ideaForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var idea = {
+          id: "idea-" + Date.now(),
+          title: document.getElementById("ideaTitle").value.trim(),
+          body: document.getElementById("ideaBody").value.trim(),
+          theme: document.getElementById("workshopTheme").value,
+          method: workshopMethodNames[document.getElementById("workshopMethod").value],
+          region: selectedRegion,
+          createdAt: new Date().toISOString()
+        };
+        ideas.unshift(idea);
+        var stored = saveIdeas();
+        renderIdeas();
+        event.target.reset();
+        document.getElementById("ideaCount").textContent = stored ? ideas.length + " Idee(n) lokal gespeichert" : "Idee ist in dieser Sitzung sichtbar; Browser-Speicherung nicht verfügbar.";
+      });
+      document.getElementById("exportIdeas").addEventListener("click", function () {
+        var data = { title: "Energiebrücken Ideenwand", schemaVersion: 1, exportedAt: new Date().toISOString(), ideas: ideas };
+        var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        link.href = url;
+        link.download = "energiebruecken-ideen.json";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      });
+      document.getElementById("clearIdeas").addEventListener("click", function () {
+        if (!ideas.length || window.confirm("Möchtest du alle lokal gespeicherten Ideen aus dieser Vorschau löschen?")) {
+          ideas = [];
+          try { localStorage.removeItem(IDEA_KEY); } catch (error) {}
+          renderIdeas();
+        }
+      });
+
+      var status = document.getElementById("appStatus");
+      var installButton = document.getElementById("installApp");
+      var pendingInstall = null;
+      function updateConnectionStatus() {
+        var network = navigator.onLine ? "Online" : "Offline";
+        if (document.documentElement.dataset.pwa === "true") {
+          status.textContent = network + " · lokal gespeicherte Daten";
+        } else {
+          status.textContent = "Einzelne HTML-Datei · lokale Daten";
+        }
+      }
+      window.addEventListener("online", updateConnectionStatus);
+      window.addEventListener("offline", updateConnectionStatus);
+      updateConnectionStatus();
+
+      window.addEventListener("beforeinstallprompt", function (event) {
+        event.preventDefault();
+        pendingInstall = event;
+        installButton.hidden = false;
+      });
+      installButton.addEventListener("click", async function () {
+        if (!pendingInstall) {
+          status.textContent = "Zum Installieren die PWA unter HTTPS oder localhost öffnen und das Browsermenü verwenden.";
+          return;
+        }
+        pendingInstall.prompt();
+        await pendingInstall.userChoice;
+        pendingInstall = null;
+        installButton.hidden = true;
+      });
+      window.addEventListener("appinstalled", function () {
+        installButton.hidden = true;
+        status.textContent = "Energiebrücken ist auf diesem Gerät installiert.";
+      });
+      if (document.documentElement.dataset.pwa === "true" && "serviceWorker" in navigator &&
+          (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("./sw.js", { scope: "./" }).catch(function () {
+            status.textContent = "App geöffnet · Offline-Cache konnte nicht eingerichtet werden.";
+          });
+        });
+      }
+
+      render();
+      selectRegion("Rhein-Main");
+      renderWorkshopQuestions();
+      renderIdeas();
+    }());
+  </script>
+<a href="./matching.html" style="position:fixed;bottom:1rem;right:1rem;z-index:9999;background:#173e32;color:#fff;padding:.65rem 1rem;border-radius:1rem;text-decoration:none;box-shadow:0 2px 12px #0003">Fachkräfte-Matching V2</a></body>
+</html>
+
