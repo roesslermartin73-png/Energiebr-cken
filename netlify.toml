@@ -1,5 +1,5 @@
 [build]
-  publish = "site"
+  publish = "."
 
 [build.environment]
   NODE_VERSION = "22"
