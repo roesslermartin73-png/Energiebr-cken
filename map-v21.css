@@ -1,0 +1,14 @@
+/* Karte V2.1 – klick- und tastaturbedienbare Bundesländer-Konzeptkarte */
+.map-v21-toolbar{display:grid;grid-template-columns:minmax(180px,1fr) minmax(180px,1fr) auto;gap:14px;align-items:end;margin:0 0 18px;padding:16px 18px;border:1px solid #dce5d7;border-radius:17px;background:#fffefa}
+.map-v21-toolbar label{display:flex;flex-direction:column;gap:6px;color:#40574a;font-size:.81rem;font-weight:750}
+.map-v21-toolbar select{min-width:0;width:100%;cursor:pointer}
+.map-v21-count{margin:0 0 11px;color:#4e6b50;font-size:.77rem;font-weight:650;max-width:190px}
+.map-v21-marker .marker-dot{stroke:#fffefa;stroke-width:2.5;transition:fill .2s ease,r .2s ease}
+.map-v21-marker .marker-halo{fill:rgba(215,239,117,.12)}
+.map-v21-marker.map-v21-dimmed{opacity:.22}
+.map-v21-marker.selected{opacity:1;filter:drop-shadow(0 0 5px #d7ef75)}
+.map-v21-marker:focus-visible{outline:none}
+.map-v21-marker:focus-visible .marker-halo{stroke:#fff;stroke-width:3}
+.map-v21-label{fill:#fffefa;font-size:14px;font-weight:850;paint-order:stroke;stroke:#173e32;stroke-width:5;stroke-linejoin:round;pointer-events:none}
+@media(max-width:900px){.map-v21-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}.map-v21-count{grid-column:1/-1;max-width:none;margin:0}}
+@media(max-width:560px){.map-v21-toolbar{grid-template-columns:minmax(0,1fr);padding:13px}.map-v21-count{grid-column:auto}}

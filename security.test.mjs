@@ -1,6 +1,6 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import {DEMO_PROFILES,rankProfiles,validateQuery} from '../site/matching-engine.mjs';
+import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import {DEMO_PROFILES,rankProfiles,validateQuery} from './matching-engine.mjs';
 test('private and unapproved profiles excluded',()=>assert.deepEqual(rankProfiles(DEMO_PROFILES,{skills:['waermeplanung'],region:'Hessen'}).map(x=>x.id),['demo-01']));
 test('invalid queries rejected',()=>{for(const x of [null,{skills:['<script>']},{skills:[]},{skills:'waermeplanung'},{skills:['waermeplanung'],region:42}])assert.throws(()=>validateQuery(x));});
 test('matching results do not contain contact fields',()=>{for(const p of rankProfiles(DEMO_PROFILES,{skills:['energieberatung']})){assert.equal('email' in p,false);assert.equal('phone' in p,false);}});
-test('service worker does not indiscriminately cache same-origin GET',()=>{const s=readFileSync(new URL('../site/sw.js',import.meta.url),'utf8');assert.match(s,/ALLOWED\.has\(url\.pathname\)/);assert.match(s,/req\.method!=='GET'/);});
-test('netlify security headers and CSP exist',()=>{const s=readFileSync(new URL('../site/_headers',import.meta.url),'utf8');assert.match(s,/Content-Security-Policy:/);assert.match(s,/frame-ancestors 'none'/);assert.match(s,/X-Content-Type-Options: nosniff/);});
+test('service worker does not indiscriminately cache same-origin GET',()=>{const s=readFileSync(new URL('./sw.js',import.meta.url),'utf8');assert.match(s,/ALLOWED\.has\(url\.pathname\)/);assert.match(s,/req\.method!=='GET'/);});
+test('netlify security headers and CSP exist',()=>{const s=readFileSync(new URL('./_headers',import.meta.url),'utf8');assert.match(s,/Content-Security-Policy:/);assert.match(s,/frame-ancestors 'none'/);assert.match(s,/X-Content-Type-Options: nosniff/);});

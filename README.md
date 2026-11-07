@@ -1,19 +1,26 @@
-# Energiebrücken – Netlify-PWA + Standalone + V2-Matching
+# Energiebrücken PWA – Release V2.1 (07.11.2026)
 
-## Inhalte
-- `site/index.html`: installierbare Netzwerk-PWA (Konzept V1, Offline-App-Shell)
-- `site/standalone.html`: eigenständige HTML-Datei, ohne Server direkt öffnbar
-- `site/matching.html`: statische V2-Matching-Demo mit fiktiven Daten, ohne Backend
-- `site/manifest.webmanifest`, `site/sw.js`, `site/icons/`: PWA-Installation und begrenzter Offline-Cache
-- `site/_headers`: Netlify-Sicherheitsheader, einschließlich CSP
-- `netlify.toml`: Netlify-Publish-Verzeichnis
+**Live-Projekt:** https://friendly-entremet-a1988d.netlify.app/
+
+## Was ist neu?
+- Schematische Deutschlandkarte mit **allen 16 Bundesländern** (anklick- und tastaturbedienbar)
+- Bundesland-Auswahl, Themenfilter und illustrative Projektideen
+- Rhein-Main/Hessen als Startpunkt; Auswahl kann ins lokale Profil oder in die Kreativwerkstatt übernommen werden
+- Sichtbarer Versionshinweis V2.1
+- Aktualisierter PWA-Offline-Cache, inklusive Kartenmodul und Icons
+- Ein sicherer Veröffentlichungsschritt: Netlify baut `dist/` aus `scripts/build.mjs`
+- Automatische GitHub-Qualitätschecks mit Node.js 22
+
+## Struktur
+Die GitHub-Hauptdateien sind Quell-Dateien. `scripts/build.mjs` erstellt daraus **dist/**.
+Nur `dist/` wird von Netlify veröffentlicht. Die separat mitgelieferte Netlify-ZIP enthält genau diese statischen Website-Dateien im ZIP-Hauptverzeichnis inklusive `icons/`.
 
 ## Lokal testen
-Im Projektverzeichnis: `python3 -m http.server 8000 -d site`, danach http://localhost:8000 öffnen. Alternativ `site/standalone.html` per Doppelklick öffnen. PWA-Installation benötigt HTTPS oder localhost.
+`node --test security.test.mjs tests/release.test.mjs && node scripts/build.mjs && node --test tests/dist.test.mjs`
+Danach `python3 -m http.server 8000 -d dist` und http://localhost:8000 öffnen.
 
-## Netlify – Drag & Drop
-Den **Inhalt des Ordners `site/`** als ZIP hochladen oder den Ordner selbst auf Netlify Drop ziehen. Bei GitHub-Verbindung das **gesamte Projekt** in ein Repository laden: Netlify erkennt `netlify.toml` und veröffentlicht `site/` (kein Build-Befehl).
+## Veröffentlichung
+Der Commit auf `main` löst bei korrekt verknüpftem Repository automatisch einen Netlify-Build aus. In Netlify unter **Deploys** prüfen, ob der neue Commit den Status **Published** hat. Für eine manuelle Wiederherstellung `Energiebruecken_V2.1_Netlify.zip` per Netlify Drop verwenden.
 
-## Sicherheit und Grenzen
-Nur fiktive Demo-Profile verwenden. Es gibt keine Anmeldung, Datenbank, serverseitige Zugriffskontrolle, reale Kontaktvermittlung oder synchronisierte Mitglieder. Lokal angelegte Profile der V1 werden unverschlüsselt im Browser gespeichert. Nicht für echte Kontaktdaten oder öffentlichen Produktivbetrieb verwenden. Die Matching-Demo verarbeitet nur lokale, fest hinterlegte Testdaten. CSP erlaubt für den bestehenden Legacy-HTML-Code Inline-CSS; vor Produktivbetrieb modernisieren. Externe KI wird nicht verwendet; KI-Datenfreigabe ist noch nicht entschieden.
-Netlify-Synchronisationstest V2 – 07.11.2026
+## Grenzen
+Alle 16 Punkte sind schematische Konzeptregionen, keine georeferenzierten Verwaltungsgrenzen. Es gibt keine echten Mitgliederdaten, regionale Kennzahlen oder gesicherte Projekte. Fachkräfte-Matching nutzt fiktive Profile, keine echte Datenbank. Lokal eingegebene Profile bleiben im jeweiligen Browser und sollten keine sensiblen personenbezogenen Daten enthalten. `standalone.html` bleibt die unveränderte ältere Offline-Einzeldatei; die neue Kartenfunktion steht in `index.html` der gebauten PWA zur Verfügung.
