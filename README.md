@@ -16,3 +16,4 @@ Den **Inhalt des Ordners `site/`** als ZIP hochladen oder den Ordner selbst auf 
 
 ## Sicherheit und Grenzen
 Nur fiktive Demo-Profile verwenden. Es gibt keine Anmeldung, Datenbank, serverseitige Zugriffskontrolle, reale Kontaktvermittlung oder synchronisierte Mitglieder. Lokal angelegte Profile der V1 werden unverschlüsselt im Browser gespeichert. Nicht für echte Kontaktdaten oder öffentlichen Produktivbetrieb verwenden. Die Matching-Demo verarbeitet nur lokale, fest hinterlegte Testdaten. CSP erlaubt für den bestehenden Legacy-HTML-Code Inline-CSS; vor Produktivbetrieb modernisieren. Externe KI wird nicht verwendet; KI-Datenfreigabe ist noch nicht entschieden.
+Netlify-Synchronisationstest V2 – 07.11.2026
